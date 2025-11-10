@@ -42,3 +42,6 @@
 *.dwo
 
 .vscode
+
+# executable file
+main
