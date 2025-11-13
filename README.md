@@ -26,4 +26,8 @@ This is just a minimal version of git, supported commands are:
     3. Temp repo
     4. Staged repo
 - Flow: git add -> add changed file to temp repo -> git commit -> update staged repo -> git push -> push to upstream repo
-- 
+
+
+# Error history
+- clang: error: linker command failed with exit code 1, Undefined symbols for architecture arm64 -> missing .cpp file
+in the file list of g++/clang
