@@ -34,7 +34,6 @@ This is just a minimal version of git, supported commands are:
                     │
                 git push
                     │
-                    ▼
           ┌────────────────────┐
           │  Downstream Area   │
           │ (Local Repository) │
@@ -44,7 +43,6 @@ This is just a minimal version of git, supported commands are:
                     │
                 git commit
                     │
-                    ▼
           ┌────────────────────┐
           │   Staged Area      │
           │ (Index / Cache)    │
@@ -53,7 +51,6 @@ This is just a minimal version of git, supported commands are:
                     │
                 git add
                     │
-                    ▼
           ┌────────────────────┐
           │    Local Area      │
           │ (Working Directory)│
