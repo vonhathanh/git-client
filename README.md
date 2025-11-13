@@ -27,17 +27,41 @@ This is just a minimal version of git, supported commands are:
     4. Local repository: files that are committed and waiting to be pushed to upstream
 - Flow: git add -> add changed file to staging area -> git commit -> update local repository -> git push -> push to upstream repo
 
-[Working Directory] --(git add)--> [Staging Area]
-        ^                             |
-        |                             v
-     (edit)                       (git commit)
-        |                             v
-        <----- (checkout) ---- [Local Repository]
-                                     |
-                                (git push)
-                                     v
-                             [Upstream Repository]
+          ┌────────────────────┐
+          │   Upstream Area    │
+          │ (Remote Repository)│
+          └─────────▲──────────┘
+                    │
+                git push
+                    │
+                    ▼
+          ┌────────────────────┐
+          │  Downstream Area   │
+          │ (Local Repository) │
+          │   - committed,     │
+          │     not yet pushed │
+          └─────────▲──────────┘
+                    │
+                git commit
+                    │
+                    ▼
+          ┌────────────────────┐
+          │   Staged Area      │
+          │ (Index / Cache)    │
+          │ - added by "git add"│
+          └─────────▲──────────┘
+                    │
+                git add
+                    │
+                    ▼
+          ┌────────────────────┐
+          │    Local Area      │
+          │ (Working Directory)│
+          │ - edited files     │
+          └────────────────────┘
 
+Pull flow:
+Upstream ──(git fetch/pull)──▶ Downstream ──(merge)──▶ Local
 
 
 # Error history
