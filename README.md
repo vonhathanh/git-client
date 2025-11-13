@@ -20,12 +20,24 @@ This is just a minimal version of git, supported commands are:
 # design
 
 ## 1. repository
-- Should have 3 areas for:
-    1. Local repo
-    2. Upstream repo
-    3. Temp repo
-    4. Staged repo
-- Flow: git add -> add changed file to temp repo -> git commit -> update staged repo -> git push -> push to upstream repo
+- Should have 4 areas with specific responsibility:
+    1. Working directory: current working directory
+    2. Upstream repository: destination of git push/pull/fetch
+    3. Staging area: files that being added by "git add" but not commited yet
+    4. Local repository: files that are committed and waiting to be pushed to upstream
+- Flow: git add -> add changed file to staging area -> git commit -> update local repository -> git push -> push to upstream repo
+
+[Working Directory] --(git add)--> [Staging Area]
+        ^                             |
+        |                             v
+     (edit)                       (git commit)
+        |                             v
+        <----- (checkout) ---- [Local Repository]
+                                     |
+                                (git push)
+                                     v
+                             [Upstream Repository]
+
 
 
 # Error history
