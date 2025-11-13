@@ -68,6 +68,14 @@ void run_command(char *commands[], char *options[], char *flags[])
     print_args(commands, "Commands");
     print_args(options, "Options");
     print_args(flags, "Flags");
+
+    // switch/hashmap/if-else chain can be used to run the main command
+    // handler = function_map[commands[0]]
+    // handler(++commands, options, flags)
+    char* cmd = commands[0];
+    if (cmd == "init") {
+        
+    }
 }
 
 // char *args[]: array of char pointer
