@@ -9,7 +9,7 @@ using namespace std;
 
 // map<string, void(*)(const string&)> function_map;
 // TODO: check std::functional
-map<string, function<void(const string &)>> function_map;
+// map<string, function<void(const string &)>> function_map;
 
 int main(int argc, char *args[])
 {
