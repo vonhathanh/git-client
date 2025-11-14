@@ -1,9 +1,26 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <cstring>
 #include "cmd.h"
+#include "handlers.h"
 
 using namespace std;
+
+void help(Command cmd) {
+    switch (cmd)
+    {
+    case Init:
+        cout << "usage: git init" << endl;
+        break;
+    case Clone:
+        cout << "usage: git clone <repo_url>" << endl;
+        break;
+    default:
+        cout << "Help message for this command is not developed yet, hixx!!!" << endl;
+        break;
+    }
+}
 
 void print_command(const string &command, const string &guide)
 {
@@ -49,8 +66,8 @@ void print_help()
 
 void print_args(char *args[], string arg_name)
 {
-    if (arg_name != "")
-        cout << arg_name << ": ";
+    cout << arg_name << ": ";
+    if (!*args) cout << "none";
     // just plain args won't work because it's always point to something in the memory, we need *args
     // *args = args[0]
     while (*args)
@@ -73,8 +90,10 @@ void run_command(char *commands[], char *options[], char *flags[])
     // handler = function_map[commands[0]]
     // handler(++commands, options, flags)
     char* cmd = commands[0];
-    if (cmd == "init") {
-        
+    if (strcmp(cmd, "init") == 0) {
+        init(commands, options, flags);
+    } else {
+        cout << "Commands: " << cmd << " is not implemented atm, may be submit a PR if you can code?" << endl;
     }
 }
 
