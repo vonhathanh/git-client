@@ -7,7 +7,8 @@
 
 using namespace std;
 
-void help(Command cmd) {
+void help(Command cmd)
+{
     switch (cmd)
     {
     case Init:
@@ -67,7 +68,8 @@ void print_help()
 void print_args(char *args[], string arg_name)
 {
     cout << arg_name << ": ";
-    if (!*args) cout << "none";
+    if (!*args)
+        cout << "none";
     // just plain args won't work because it's always point to something in the memory, we need *args
     // *args = args[0]
     while (*args)
@@ -89,10 +91,13 @@ void run_command(char *commands[], char *options[], char *flags[])
     // switch/hashmap/if-else chain can be used to run the main command
     // handler = function_map[commands[0]]
     // handler(++commands, options, flags)
-    char* cmd = commands[0];
-    if (strcmp(cmd, "init") == 0) {
+    char *cmd = commands[0];
+    if (strcmp(cmd, "init") == 0)
+    {
         init(commands, options, flags);
-    } else {
+    }
+    else
+    {
         cout << "Commands: " << cmd << " is not implemented atm, may be submit a PR if you can code?" << endl;
     }
 }
