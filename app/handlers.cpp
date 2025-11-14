@@ -1,8 +1,12 @@
-#include "handlers.h";
+#include<iostream>
+#include "handlers.h"
+#include "cmd.h"
+
+using namespace std;
 
 void clone(char *commands[], char *options[], char *flags[]) {
     if (commands[0] == nullptr) {
-        print_help(COMMANDS.Clone);
+        help(Clone);
     } else {
         clone_repository(commands[0], options, flags);
     }
@@ -10,7 +14,7 @@ void clone(char *commands[], char *options[], char *flags[]) {
 
 void init(char *commands[], char *options[], char *flags[]) {
     if (commands[0] == nullptr) {
-        print_help(COMMANDS.Init);
+        help(Init);
     } else {
         init_repository(commands[0], options, flags);
     }
@@ -48,4 +52,5 @@ void init_repository(char* repo_path, char *options[], char *flags[]) {
     // create & init index file
     // init default local branch
     // init report: staged area, temp area
+    cout << "Repository is initialized" << endl;
 }
