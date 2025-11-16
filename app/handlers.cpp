@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sys/stat.h>
+#include <errno.h>
 #include "handlers.h"
 #include "cmd.h"
 
@@ -81,15 +82,56 @@ void init_repository(char *repo_path, char *options[], char *flags[])
     struct stat info;
     if (stat("./.git", &info) != 0)
     {
-        cout << "path is invalid" << endl;
+        if (errno == EACCES)
+        {
+            cout << "EACCES: Permission denied\n";
+        }
+        else if (errno == EIO)
+        {
+            cout << "EIO: I/O error\n";
+        }
+        else if (errno == ELOOP)
+        {
+            cout << "ELOOP: Too many symbolic links\n";
+        }
+        else if (errno == ENAMETOOLONG)
+        {
+            cout << "ENAMETOOLONG: Path too long\n";
+        }
+        else if (errno == ENOENT)
+        {
+            cout << "Initializing new git repository...\n";
+            // three main flags: read, write, execute
+            // three distinct entities: owner(u), group(g), others(o)
+            // read = 4, write = 2, execute = 1, 7 = read + write + execute
+            // 700 -> only owner has the right to read/write/.execute
+            mkdir("./.git", 0700);
+        }
+        else if (errno == ENOTDIR)
+        {
+            cout << "ENOTDIR: Not a directory\n";
+        }
+        else if (errno == EOVERFLOW)
+        {
+            cout << "EOVERFLOW: Value cannot fit in struct stat\n";
+        }
+        else
+        {
+            cout << "Unknown errno = " << errno << endl;
+        }
         return;
     }
+
     if (info.st_mode & S_IFDIR)
     {
         cout << ".git is already existed" << endl;
     }
+    else if (info.st_mode & S_IFREG)
+    {
+        cout << ".git is a file, you should delete it and run git init again\n";
+    }
     else
     {
-        cout << "Repository is initialized" << endl;
+        cout << "Something went wrong during `git init`" << endl;
     }
 }
