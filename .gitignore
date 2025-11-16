@@ -45,3 +45,9 @@
 
 # executable file
 main
+
+# build artifacts
+build/
+
+# macos specific
+.DS_Store
