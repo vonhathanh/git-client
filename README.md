@@ -16,6 +16,7 @@ This is just a minimal version of git, supported commands are:
 - clone
 - diff
 - add
+- stash
 
 # design
 
@@ -97,6 +98,15 @@ What happen when we checkout branch_X?
     - read index file, check if a file commit hash != index file commit has
     - override that file by file from commits/ dir
 
+## 3.2 Create branch
+- Create branch name in refs/ dir if that branch doesn't exist
+- Create index file according to section 2.1
+
 # error history
 - clang: error: linker command failed with exit code 1, Undefined symbols for architecture arm64 -> missing .cpp file
 in the file list of g++/clang
+
+# build & run
+Run `make` to build
+Run `mv ./build/main ./main` to copy executable file to current directory
+Use ./main as exactly the way you use git
