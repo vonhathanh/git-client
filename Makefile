@@ -11,6 +11,7 @@ OBJS = $(SRCS:app/%.cpp=build/%.o)
 
 # Default target
 all: $(TARGET)
+	mv ./main ./build
 
 # Link object files
 $(TARGET): $(OBJS)
