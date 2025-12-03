@@ -110,4 +110,5 @@ in the file list of g++/clang
 Run `make` to build
 Run `mv ./build/main ./main` to copy executable file to current directory
 Use `./main` as exactly as the way you use git (with some friction, of course :))
+Example: `./main init`, `./main checkout -b barnch`,...
 Optional: run `make clean` to delete the build directory & executable file
