@@ -1,8 +1,11 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <sys/stat.h>
 #include <errno.h>
 #include "handlers.h"
 #include "cmd.h"
+#include "constants.h"
 
 using namespace std;
 
@@ -62,9 +65,61 @@ void clone_repository(char *repo_url, char *options[], char *flags[])
     // then sign the request with ssh key
 }
 
-void checkout(char *commands[], char *options[], char *flags[])
+void create_branch(const char* name) {
+    struct stat info;
+    string path = BRANCH_DIR + '/' + string(name);
+    if (stat(path.c_str(), &info) != 0) {
+        if (errno == EACCES)
+        {
+            cout << "EACCES: Permission denied\n";
+        }
+        else if (errno == EIO)
+        {
+            cout << "EIO: I/O error\n";
+        }
+        else if (errno == ELOOP)
+        {
+            cout << "ELOOP: Too many symbolic links\n";
+        }
+        else if (errno == ENAMETOOLONG)
+        {
+            cout << "ENAMETOOLONG: Path too long\n";
+        }
+        else if (errno == ENOENT)
+        {
+            cout << "OK" << endl;
+            ofstream file;
+            file.open(path, ios::out);
+            if (!file) {
+                cout << "Can't create file at: " << path << endl;
+                return;
+            }
+            file.write(name, strlen(name));
+            file.close();
+        }
+        else if (errno == ENOTDIR)
+        {
+            cout << "ENOTDIR: Not a directory\n";
+        }
+        else if (errno == EOVERFLOW)
+        {
+            cout << "EOVERFLOW: Value cannot fit in struct stat\n";
+        }
+        else
+        {
+            cout << "Unknown errno = " << errno << endl;
+        }
+    } else {
+        cout << "Branch " << name << " already existed" << endl;
+    }
+}
+
+void checkout(const char *branch, char *options[] = nullptr, char *flags[] = nullptr)
 {
-    // read section 3.1 in readme.md
+    if (options == nullptr) return;
+    if (strcmp(options[0],"-b")) {
+        create_branch(branch);
+    }
 }
 
 void init_repository(char *repo_path, char *options[], char *flags[])
@@ -105,7 +160,11 @@ void init_repository(char *repo_path, char *options[], char *flags[])
             // three distinct entities: owner(u), group(g), others(o)
             // read = 4, write = 2, execute = 1, 7 = read + write + execute
             // 700 -> only owner has the right to read/write/.execute
-            mkdir("./.git", 0700);
+            mkdir(GIT_DIR.c_str(), 0700);
+            mkdir(BRANCH_DIR.c_str(), 0700);
+            mkdir(COMMIT_DIR.c_str(), 0700);
+            create_branch("master");
+            checkout("master");
         }
         else if (errno == ENOTDIR)
         {
